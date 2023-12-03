@@ -1,6 +1,10 @@
-package objects;
+package zero.flixel.depth;
 
-import objects.DepthCamera;
+import zero.flixel.depth.DepthCamera;
+import flixel.math.FlxPoint;
+
+using Math;
+using zero.extensions.FloatExt;
 
 /**
 	A Stack Sprite stacks frames up along the Z axis to appear as a 3D voxel object.
@@ -30,7 +34,7 @@ class StackSprite extends DepthSprite {
 		var _angle = angle;
 		var _position = FlxPoint.get(x, y);
 		//get offset vector
-		var offset = FlxPoint.get(DepthCamera.container.scaleY.map(0, 1, gap / lod.max(1), 0));
+		var offset = FlxPoint.get(cam_orbit_y.map(0, 1, gap / lod.max(1), 0));
 		offset.degrees = -camera.angle - 90;
 		// loop - set frame and transform per slice
 		for (i in 0...slices.length * lod.max(1).floor()) {

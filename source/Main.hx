@@ -1,6 +1,5 @@
 package;
 
-import objects.DepthCamera;
 import openfl.display.Sprite;
 import flixel.FlxGame;
 

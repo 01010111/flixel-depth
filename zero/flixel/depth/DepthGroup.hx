@@ -1,4 +1,4 @@
-package objects;
+package zero.flixel.depth;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 

@@ -1,7 +1,11 @@
-package objects;
+package zero.flixel.depth;
 
-import objects.DepthCamera;
+import flixel.FlxG;
+import zero.flixel.depth.DepthCamera;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
+
+using zero.extensions.FloatExt;
 
 /**
 	A Depth Sprite, gives a typical FlxSprite the ability to appear to travel along the Z axis
@@ -20,14 +24,23 @@ class DepthSprite extends FlxSprite {
 		var out = d.y;
 		p.put();
 		d.put();
-		return out + z * DepthCamera.container.scaleY * Math.PI;
+		return out + z * cam_orbit_y * Math.PI;
+	}
+
+	var cam_orbit_y(get, never):Float;
+	function get_cam_orbit_y() {
+		if (DepthCamera.container == null) {
+			FlxG.log.warn('No Depth Camera in use!');
+			return 1;
+		}
+		return DepthCamera.container.scaleY;
 	}
 
 	override function draw() {
 		if (z == 0) return super.draw();
 
 		var _position = FlxPoint.get(x, y);
-		var offset = FlxPoint.get(z * DepthCamera.container.scaleY.map(0, 1, Math.PI, 0));
+		var offset = FlxPoint.get(z * cam_orbit_y.map(0, 1, Math.PI, 0));
 		offset.degrees = -camera.angle - 90;
 
 		setPosition(_position.x + offset.x, _position.y + offset.y);

@@ -1,8 +1,12 @@
-package objects;
+package zero.flixel.depth;
 
 import openfl.display.Sprite;
 import flixel.FlxObject;
 import flixel.FlxCamera;
+import flixel.FlxG;
+
+using Math;
+using zero.extensions.FloatExt;
 
 /**
 	DepthCamera is an object that manipulates your FlxCamera and FlxGame to make it appear 3D.

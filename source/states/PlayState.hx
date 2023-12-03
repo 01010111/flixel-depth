@@ -1,14 +1,14 @@
 package states;
 
-import objects.DepthSprite;
-import objects.PlaneSprite;
-import objects.DepthGroup;
-import objects.BillboardSprite;
+import zero.flixel.depth.DepthSprite;
+import zero.flixel.depth.PlaneSprite;
+import zero.flixel.depth.DepthGroup;
+import zero.flixel.depth.BillboardSprite;
 import flixel.math.FlxRandom;
-import objects.StackSprite;
+import zero.flixel.depth.StackSprite;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import objects.DepthCamera;
+import zero.flixel.depth.DepthCamera;
 import flixel.FlxSprite;
 import flixel.FlxState;
 
@@ -71,7 +71,7 @@ class PlayState extends FlxState {
 		walker.screenCenter();
 		grp.add(walker);
 
-		car = new objects.StackSprite();
+		car = new zero.flixel.depth.StackSprite();
 		car.loadGraphic(Images.car__png, true, 32, 32);
 		car.auto_stack();
 		car.lod = 4;

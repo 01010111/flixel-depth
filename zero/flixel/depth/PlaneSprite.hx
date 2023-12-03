@@ -1,7 +1,9 @@
-package objects;
+package zero.flixel.depth;
 
 import flixel.FlxCamera;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
+
+using zero.extensions.FloatExt;
 
 /**
 	A Plane Sprite appears to exist on the Z axis.
@@ -20,7 +22,7 @@ class PlaneSprite extends DepthSprite {
 		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, checkFlipX(), checkFlipY());
 
 		// instead of transforming the matrix like normal, we're going to skew the sprite to make it appear as a 3D plane
-		var cam_scale_y = DepthCamera.container.scaleY.map(0, 1, Math.PI, 0);
+		var cam_scale_y = cam_orbit_y.map(0, 1, Math.PI, 0);
 		var cam_radians = (camera.angle) * Math.PI / 180;
 		var radians = angle * Math.PI / 180;
 

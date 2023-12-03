@@ -1,6 +1,8 @@
-package objects;
+package zero.flixel.depth;
 
-import objects.DepthCamera;
+import zero.flixel.depth.DepthCamera;
+
+using zero.extensions.FloatExt;
 
 /**
 	A Billboard Sprite that always faces the camera.
@@ -18,7 +20,7 @@ class BillboardSprite extends DepthSprite {
 		var _y = y;
 
 		angle = _angle - camera.angle;
-		scale.y = scale_with_cam ? _scaleY * DepthCamera.container.scaleY.map(0, 1, Math.PI, 0) : _scaleY * 1/DepthCamera.container.scaleY;
+		scale.y = scale_with_cam ? _scaleY * cam_orbit_y.map(0, 1, Math.PI, 0) : _scaleY * 1/cam_orbit_y;
 
 		super.draw();
 

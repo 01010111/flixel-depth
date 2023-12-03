@@ -17,6 +17,7 @@
 	<set name="BUILD_DIR" value="export" if="debug" />
 	<set name="BUILD_DIR" value="release" unless="debug" />
 	<classpath name="source" />
+	<classpath name="zero" />
 	<assets path="assets" embed="true" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
