@@ -3,16 +3,23 @@ package objects;
 import flixel.FlxCamera;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
 
+/**
+	A Plane Sprite appears to exist on the Z axis.
+	"angle" still rotates around the Z axis, but because this sprite is orthogonal to the ground plane, it appears to spin it in 3D...
+**/
 class PlaneSprite extends DepthSprite {
 
+	// returns true if the front of the plane is facing the camera
 	public var facing_camera(get, never):Bool;
 	function get_facing_camera() {
+		// basically doing a normalized dot() to compare this angle with the camera's angle
 		return Math.cos(camera.angle * Math.PI/180 + angle * Math.PI/180) > 0;
 	}
 
 	override function drawComplex(camera:FlxCamera) {
 		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, checkFlipX(), checkFlipY());
 
+		// instead of transforming the matrix like normal, we're going to skew the sprite to make it appear as a 3D plane
 		var cam_scale_y = DepthCamera.container.scaleY.map(0, 1, Math.PI, 0);
 		var cam_radians = (camera.angle) * Math.PI / 180;
 		var radians = angle * Math.PI / 180;

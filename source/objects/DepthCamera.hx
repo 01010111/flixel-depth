@@ -4,11 +4,18 @@ import openfl.display.Sprite;
 import flixel.FlxObject;
 import flixel.FlxCamera;
 
+/**
+	DepthCamera is an object that manipulates your FlxCamera and FlxGame to make it appear 3D.
+	Use set() or set_delta() to change the current orbit and zoom of the camera, move this object to move the camera.
+	Don't forget to add this object to your FlxState!
+**/
 class DepthCamera extends FlxObject {
 
-	public static var instance:DepthCamera;
+	@:noCompletion
 	public static var container:Sprite;
 	static var initialized:Bool = false;
+
+	// creates an openfl Sprite container for scaling the game
 	static function init() {
 		if (initialized) return;
 
@@ -38,6 +45,7 @@ class DepthCamera extends FlxObject {
 	function set_zoom(v) return zoom = v.clamp(0.1, 10);
 	public function set_snappiness(v) return snappiness = v.clamp(0, 1).map(0, 1, 1, 60);
 
+	// creates and initializes a new DepthCamera instance
 	public function new(orbit_x:Float = 0, orbit_y:Float = 1, zoom:Float = 1) {
 		super();
 		init();
@@ -46,8 +54,8 @@ class DepthCamera extends FlxObject {
 		set(orbit_x, orbit_y, zoom);
 	}
 
+	// we need to change the camera size so it can rotate without clipping!
 	function init_cam() {
-		instance = this;
 		var size = (FlxG.width.pow(2) + FlxG.height.pow(2)).sqrt().ceil() + 256;
 		camera.setSize(size, size);
 		camera.setPosition(-(size - FlxG.width)/2, -(size - FlxG.height)/2);
@@ -59,6 +67,7 @@ class DepthCamera extends FlxObject {
 		super.update(dt);
 	}
 
+	// interpolates values for a more cinematic camera
 	function apply(dt:Float) {
 		camera.angle += (orbit_x - camera.angle) * dt * snappiness;
 		camera.zoom += (zoom - camera.zoom) * dt * snappiness;
@@ -67,6 +76,7 @@ class DepthCamera extends FlxObject {
 		container.y += (orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height) - container.y) * dt * snappiness;
 	}
 
+	// Set camera state
 	public function set(orbit_x, orbit_y, zoom) {
 		this.orbit_x = orbit_x;
 		this.orbit_y = orbit_y;
@@ -78,6 +88,7 @@ class DepthCamera extends FlxObject {
 		container.y = orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height);
 	}
 
+	// Useful for translating user input to change in camera state
 	public function set_delta(orbit_x_delta:Float = 0, orbit_y_delta:Float = 0, zoom_delta:Float = 0) {
 		orbit_x += orbit_x_delta.map(0, 1, 0, 6);
 		orbit_y += orbit_y_delta.map(0, 1, 0, 0.1);

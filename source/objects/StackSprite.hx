@@ -2,6 +2,12 @@ package objects;
 
 import objects.DepthCamera;
 
+/**
+	A Stack Sprite stacks frames up along the Z axis to appear as a 3D voxel object.
+	Change `gap` to scale along the Z axis.
+	Use a higher `lod` (level of detail) to fill in the gaps between slices
+	To change the angle of a specific slice (and those above it) set the corresponding angle offset with `angle_offsets[]`
+**/
 class StackSprite extends DepthSprite {
 
 	// array of frames to use per slice

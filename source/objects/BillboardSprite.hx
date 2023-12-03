@@ -2,8 +2,13 @@ package objects;
 
 import objects.DepthCamera;
 
+/**
+	A Billboard Sprite that always faces the camera.
+	Appears to exist on the Z axis
+**/
 class BillboardSprite extends DepthSprite {
 
+	// Whether or not to scale with the camera or appear the same size regardless of the vertical orbit of the DepthCamera
 	public var scale_with_cam = true;
 
 	override function draw() {
