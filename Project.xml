@@ -18,7 +18,6 @@
 	<set name="BUILD_DIR" value="release" unless="debug" />
 	<classpath name="source" />
 	<classpath name="zero" />
-	<assets path="assets" embed="true" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -41,8 +40,5 @@
 	<!--<haxedef name="FLX_NO_SOUND_SYSTEM" />-->
 
 	<!-- _________________________________ Custom _______________________________ -->
-
-	<icon path='assets/icon.svg' />
-	<template path="assets/index.html" rename="index.html" />
 
 </project>

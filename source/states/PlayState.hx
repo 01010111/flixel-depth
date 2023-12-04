@@ -1,152 +1,44 @@
 package states;
 
-import zero.flixel.depth.DepthSprite;
-import zero.flixel.depth.PlaneSprite;
-import zero.flixel.depth.DepthGroup;
-import zero.flixel.depth.BillboardSprite;
-import flixel.math.FlxRandom;
-import zero.flixel.depth.StackSprite;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import zero.flixel.depth.DepthCamera;
-import flixel.FlxSprite;
+import objects.*;
 import flixel.FlxState;
+import flixel.FlxG;
+import zero.flixel.depth.DepthGroup;
+import zero.flixel.depth.DepthCamera;
 
 class PlayState extends FlxState {
 
-	var car:StackSprite;
-	var cam:DepthCamera;
-	var grp:DepthGroup;
-
-	var plane:PlaneSprite;
-	var planes:Array<PlaneSprite> = [];
+	var depth_camera:DepthCamera;
+	var depth_group:DepthGroup;
+	var last_mouse_x:Float;
+	var last_mouse_y:Float;
 
 	override function create() {
-		FlxG.mouse.visible = false;
 		bgColor = 0xff32343C;
 
-		add(cam = new DepthCamera(0, 0, 3));
-		cam.set_snappiness(0.1);
+		add(new DotGrid());
 
-		for (j in 0...(FlxG.height/32).floor()) for (i in 0...(FlxG.width/32).floor()) {
-			var s = new FlxSprite(i * 32, j * 32);
-			s.makeGraphic(1,1);
-			add(s);
-		}
+		add(depth_camera = new DepthCamera(0, 0, 3));
 
-		grp = new DepthGroup();
-		add(grp);
+		depth_group = new DepthGroup();
+		add(depth_group);
 
-		// plane = new PlaneSprite();
-		// plane.loadGraphic(Images.grass__png);
-		// plane.screenCenter();
-		// grp.add(plane);
+		var stack_cube = new StackCube();
+		stack_cube.screenCenter();
+		depth_group.add(stack_cube);
 
-		var cube = new StackSprite();
-		cube.loadGraphic(Images.cube__png, true, 32, 32);
-		cube.auto_stack();
-		cube.screenCenter();
-		grp.add(cube);
-
-		for (i in 0...4) {
-			var cube = new StackSprite();
-			cube.loadGraphic(Images.cube__png, true, 32, 32);
-			cube.auto_stack();
-			cube.screenCenter();
-			cube.color = new FlxRandom().color();
-			cube.z += i * 32;
-			cube.x -= 32;
-			grp.add(cube);
-		}
-
-		var walker = new BillboardSprite();
-		walker.loadGraphic(Images.fadeline__png, true, 32, 32);
-		walker.animation.add('play', [0,0,1,2,3,3,4,5], 15);
-		walker.animation.play('play');
-		walker.z = 32;
-		walker.scale.set(2, 2);
-		walker.origin.set(16, 32);
-		walker.offset.set(16, 32);
-		walker.setSize(0, 0);
-		walker.screenCenter();
-		grp.add(walker);
-
-		car = new zero.flixel.depth.StackSprite();
-		car.loadGraphic(Images.car__png, true, 32, 32);
-		car.auto_stack();
-		car.lod = 4;
-		car.screenCenter();
-		car.x += 32;
-		car.y += 32;
-		grp.add(car);
-
-		var box_size = 4;
-		var wall_size = 32;
-
-		for (i in 0...box_size) {
-			var plane = new PlaneSprite(FlxG.width/2 - box_size * wall_size/2 + i * wall_size, FlxG.height/2 - box_size * wall_size/2 - wall_size/2);
-			plane.makeGraphic(wall_size, wall_size);
-			plane.drawRect(0, 0, wall_size/2, wall_size/2, 0xFF806090);
-			plane.drawRect(wall_size/2, wall_size/2, wall_size/2, wall_size/2, 0xFF806090);
-			grp.add(plane);
-			planes.push(plane);
-			var plane = new PlaneSprite(FlxG.width/2 - box_size * wall_size/2 + i * wall_size, FlxG.height/2 + box_size * wall_size/2 - wall_size/2);
-			plane.makeGraphic(wall_size, wall_size);
-			plane.drawRect(0, 0, wall_size/2, wall_size/2, 0xFF806090);
-			plane.drawRect(wall_size/2, wall_size/2, wall_size/2, wall_size/2, 0xFF806090);
-			plane.angle = 180;
-			grp.add(plane);
-			planes.push(plane);
-		}
-		for (i in 0...box_size) {
-			var plane = new PlaneSprite(FlxG.width/2 + box_size * wall_size/2 - wall_size/2, FlxG.height/2 - box_size * wall_size/2 + i * wall_size);
-			plane.makeGraphic(wall_size, wall_size);
-			plane.drawRect(0, 0, wall_size/2, wall_size/2, 0xFF806090);
-			plane.drawRect(wall_size/2, wall_size/2, wall_size/2, wall_size/2, 0xFF806090);
-			plane.angle = 90;
-			grp.add(plane);
-			planes.push(plane);
-			var plane = new PlaneSprite(FlxG.width/2 - box_size * wall_size/2 - wall_size/2, FlxG.height/2 - box_size * wall_size/2 + i * wall_size);
-			plane.makeGraphic(wall_size, wall_size);
-			plane.drawRect(0, 0, wall_size/2, wall_size/2, 0xFF806090);
-			plane.drawRect(wall_size/2, wall_size/2, wall_size/2, wall_size/2, 0xFF806090);
-			plane.angle = 270;
-			grp.add(plane);
-			planes.push(plane);
-		}
+		var plane_cube = new PlaneCube(FlxG.width/2 - 32, FlxG.height/2, depth_group);
 	}
 
-	var lmx:Float;
-	var lmy:Float;
 	override function update(dt:Float) {
-		for (plane in planes) {
-			plane.color = plane.facing_camera ? 0xFFFFFFFF: 0xFF808080;
-			plane.alpha = plane.facing_camera ? 1: 0.75;
-		}
 		super.update(dt);
-		grp.depth_sort();
+		depth_group.depth_sort();
 
-		// plane.angle--;
-		// plane.animation.frameIndex = plane.facing_camera ? 0 : 1;
+		depth_camera.set_delta(0.025);
+		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (last_mouse_y - FlxG.mouse.screenY) / 32 : 0, FlxG.mouse.wheel * 0.025);
 
-		if (FlxG.keys.pressed.A) car.lod--;
-		if (FlxG.keys.pressed.D) car.lod++;
-
-		cam.set_delta(0.025);
-
-		cam.set_delta(FlxG.mouse.pressed ? (lmx - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (lmy - FlxG.mouse.screenY) / 32 : 0, FlxG.mouse.wheel * 0.025);
-		// var scroll = FlxPoint.get();
-		// if (FlxG.keys.pressed.W) scroll.y -= 1;
-		// if (FlxG.keys.pressed.S) scroll.y += 1;
-		// if (FlxG.keys.pressed.A) scroll.x -= 1;
-		// if (FlxG.keys.pressed.D) scroll.x += 1;
-		// scroll.degrees -= camera.angle;
-		// scroll.length *= 4 / camera.zoom;
-		// cam.x += scroll.x;
-		// cam.y += scroll.y;
-
-		lmx = FlxG.mouse.screenX;
-		lmy = FlxG.mouse.screenY;
+		last_mouse_x = FlxG.mouse.screenX;
+		last_mouse_y = FlxG.mouse.screenY;
 	}
 
 }
