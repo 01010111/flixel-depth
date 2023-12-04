@@ -23,11 +23,19 @@ class PlayState extends FlxState {
 		depth_group = new DepthGroup();
 		add(depth_group);
 
-		var stack_cube = new StackCube();
-		stack_cube.screenCenter();
+		var billboard = new Billboard(FlxG.width/2 - 32, FlxG.height/2 - 32);
+		depth_group.add(billboard);
+
+		var plane = new Plane(FlxG.width/2 + 32, FlxG.height/2 + 32);
+		depth_group.add(plane);
+
+		var stack_sphere = new StackSphere(FlxG.width/2 + 32, FlxG.height/2 - 32);
+		depth_group.add(stack_sphere);
+
+		var stack_cube = new StackCube(FlxG.width/2, FlxG.height/2);
 		depth_group.add(stack_cube);
 
-		var plane_cube = new PlaneCube(FlxG.width/2 - 32, FlxG.height/2, depth_group);
+		var plane_cube = new PlaneCube(FlxG.width/2 - 32, FlxG.height/2 + 32, depth_group);
 	}
 
 	override function update(dt:Float) {

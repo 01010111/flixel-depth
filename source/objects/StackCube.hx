@@ -1,5 +1,7 @@
 package objects;
 
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import openfl.display.BitmapData;
 import zero.flixel.depth.StackSprite;
 
@@ -8,6 +10,9 @@ class StackCube extends StackSprite {
 		super(x, y);
 		loadGraphic(make_graphic(), true, 16, 16);
 		auto_stack();
+		offset.set(8, 8);
+		lod = 16;
+		FlxTween.tween(this, { gap: Math.PI * 2 }, 1, { type: PINGPONG, ease: FlxEase.sineInOut });
 	}
 
 	function make_graphic() {
@@ -33,5 +38,12 @@ class StackCube extends StackSprite {
 		}
 
 		return graphic;
+	}
+
+	var time = 0.0;
+	override function update(elapsed:Float) {
+		time += elapsed;
+		super.update(elapsed);
+		for (i in 0...16) angle_offsets[i] = Math.sin(time) * 4;
 	}
 }

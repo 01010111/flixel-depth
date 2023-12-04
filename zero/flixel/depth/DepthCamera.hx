@@ -60,7 +60,7 @@ class DepthCamera extends FlxObject {
 
 	// we need to change the camera size so it can rotate without clipping!
 	function init_cam() {
-		var size = (FlxG.width.pow(2) + FlxG.height.pow(2)).sqrt().ceil() + 256;
+		var size = (FlxG.width.pow(2) + FlxG.height.pow(2)).sqrt().ceil() + Math.max(FlxG.width, FlxG.height).floor();
 		camera.setSize(size, size);
 		camera.setPosition(-(size - FlxG.width)/2, -(size - FlxG.height)/2);
 		camera.follow(this);

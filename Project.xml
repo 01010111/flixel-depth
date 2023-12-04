@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="moslide" file="moslide" main="Main" version="0.0.1" company="01010111" />
+	<app title="flixel-depth-test" file="flixel-depth-test" main="Main" version="0.0.1" company="01010111" />
 	<app preloader="flixel.system.FlxPreloader" />
 
 	<!-- ____________________________ Window Settings ___________________________ -->

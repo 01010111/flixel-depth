@@ -1,6 +1,6 @@
 package zero.flixel.depth;
 
-import zero.flixel.depth.DepthCamera;
+import zero.flixel.depth.DepthSprite;
 
 using zero.extensions.FloatExt;
 
