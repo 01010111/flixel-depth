@@ -1,6 +1,5 @@
 package zero.flixel.depth;
 
-import zero.flixel.depth.DepthCamera;
 import flixel.math.FlxPoint;
 
 using Math;

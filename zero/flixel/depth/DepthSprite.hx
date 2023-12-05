@@ -1,7 +1,6 @@
 package zero.flixel.depth;
 
 import flixel.FlxG;
-import zero.flixel.depth.DepthCamera;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 
@@ -41,7 +40,7 @@ class DepthSprite extends FlxSprite {
 
 		var _position = FlxPoint.get(x, y);
 		var offset = FlxPoint.get(z * cam_orbit_y.map(0, 1, Math.PI, 0));
-		offset.degrees = -camera.angle - 90;
+		offset.degrees = z >= 0 ? -camera.angle - 90 : -camera.angle + 90;
 
 		setPosition(_position.x + offset.x, _position.y + offset.y);
 		super.draw();

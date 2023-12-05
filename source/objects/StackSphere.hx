@@ -19,7 +19,7 @@ class StackSphere extends StackSprite {
 	function make_graphic() {
 		var as = new FlxSprite();
 		as.makeGraphic(64, 64, 0x00FFFFFF);
-		var shades = [0xFF606060, 0xFF707070, 0xFF808080, 0xFF909090, 0xFFA0A0A0, 0xFFB0B0B0, 0xFFC0C0C0, 0xFFD0D0D0, 0xFFE0E0E0, 0xFFF0F0F0, 0xFFFFFFFF];
+		var shades = [0xFF606060, 0xFF707070, 0xFF6F7585, 0xFF909090, 0xFFA0A0A0, 0xFFB0B0B0, 0xFFC0C0C0, 0xFFD0D0D0, 0xFFE0E0E0, 0xFFF0F0F0, 0xFFFFFFFF];
 		for (s in 0...16) {
 			var r = Math.sin(s/16 * Math.PI) * 8;
 			var x = s % 4 * 16;

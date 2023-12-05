@@ -44,14 +44,21 @@ class DepthCamera extends FlxObject {
 	var zoom(default, set):Float = 1;
 	var snappiness(default, set):Float = 5;
 
+	var limits = {
+		orbit_y_min: 0.5,
+		zoom_min: 1.0,
+		zoom_max: 10.0
+	};
+
 	function set_orbit_x(v) return orbit_x = v.translate_to_nearest_angle(camera.angle);
 	function set_orbit_y(v) return orbit_y = v.clamp(0, 1);
-	function set_zoom(v) return zoom = v.clamp(0.1, 10);
+	function set_zoom(v) return zoom = v.clamp(limits.zoom_min, limits.zoom_max);
 	public function set_snappiness(v) return snappiness = v.clamp(0, 1).map(0, 1, 1, 60);
 
 	// creates and initializes a new DepthCamera instance
-	public function new(orbit_x:Float = 0, orbit_y:Float = 1, zoom:Float = 1) {
+	public function new(orbit_x:Float = 0, orbit_y:Float = 1, zoom:Float = 1, ?camera:FlxCamera) {
 		super();
+		this.camera = camera ?? FlxG.camera;
 		init();
 		init_cam();
 		screenCenter();
@@ -76,7 +83,7 @@ class DepthCamera extends FlxObject {
 		camera.angle += (orbit_x - camera.angle) * dt * snappiness;
 		camera.zoom += (zoom - camera.zoom) * dt * snappiness;
 
-		container.scaleY += (orbit_y.map(0, 1, 0.5, 1) - container.scaleY) * dt * snappiness;
+		container.scaleY += (orbit_y.map(0, 1, limits.orbit_y_min, 1) - container.scaleY) * dt * snappiness;
 		container.y += (orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height) - container.y) * dt * snappiness;
 	}
 
@@ -97,6 +104,12 @@ class DepthCamera extends FlxObject {
 		orbit_x += orbit_x_delta.map(0, 1, 0, 6);
 		orbit_y += orbit_y_delta.map(0, 1, 0, 0.1);
 		zoom_delta > 0 ? zoom *= zoom_delta.map(0, 1, 1, 1.1) : zoom /= zoom_delta.map(-1, 0, 1.1, 1);
+	}
+
+	public function set_limits(orbit_y_min:Float = 1.0, zoom_min:Float = 0.5, zoom_max:Float = 10) {
+		limits.orbit_y_min = orbit_y_min;
+		limits.zoom_min = zoom_min;
+		limits.zoom_max = zoom_max;
 	}
 
 }

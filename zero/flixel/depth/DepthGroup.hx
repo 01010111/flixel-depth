@@ -7,6 +7,10 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 **/
 class DepthGroup extends FlxTypedGroup<DepthSprite> {
 
+	public function new() {
+		super();
+	}
+
 	// quick helper class to sort by dy
 	public function depth_sort() {
 		sort((i, s1, s2) -> {

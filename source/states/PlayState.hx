@@ -1,5 +1,8 @@
 package states;
 
+import flixel.util.FlxSpriteUtil;
+import flixel.util.FlxTimer;
+import zero.flixel.depth.BillboardText;
 import objects.*;
 import flixel.FlxState;
 import flixel.FlxG;
@@ -14,28 +17,36 @@ class PlayState extends FlxState {
 	var last_mouse_y:Float;
 
 	override function create() {
+		FlxG.mouse.useSystemCursor = true;
 		bgColor = 0xff32343C;
-
-		add(new DotGrid());
+		depth_group = new DepthGroup();
+		trace(depth_group);
 
 		add(depth_camera = new DepthCamera(0, 0, 3));
-
-		depth_group = new DepthGroup();
+		add(new DotGrid());
 		add(depth_group);
 
-		var billboard = new Billboard(FlxG.width/2 - 32, FlxG.height/2 - 32);
-		depth_group.add(billboard);
+		depth_group.add(new Billboard(FlxG.width/2 - 32, FlxG.height/2 - 32));
+		depth_group.add(new Plane(FlxG.width/2 + 32, FlxG.height/2 + 32));
+		depth_group.add(new StackSphere(FlxG.width/2 + 32, FlxG.height/2 - 32));
+		depth_group.add(new StackCube(FlxG.width/2, FlxG.height/2));
+		new PlaneCube(FlxG.width/2 - 32, FlxG.height/2 + 32, depth_group);
 
-		var plane = new Plane(FlxG.width/2 + 32, FlxG.height/2 + 32);
-		depth_group.add(plane);
 
-		var stack_sphere = new StackSphere(FlxG.width/2 + 32, FlxG.height/2 - 32);
-		depth_group.add(stack_sphere);
+		var a:Array<Text> = [];
 
-		var stack_cube = new StackCube(FlxG.width/2, FlxG.height/2);
-		depth_group.add(stack_cube);
+		add(a[a.push(new Text(FlxG.width/2, FlxG.height/2, 'StackSprite')) - 1]);
+		add(a[a.push(new Text(FlxG.width/2 - 32, FlxG.height/2 - 32, 'BillboardSprite')) - 1]);
+		add(a[a.push(new Text(FlxG.width/2 - 32, FlxG.height/2 + 32, 'PlaneSprite')) - 1]);
+		add(a[a.push(new Text(FlxG.width/2 + 32, FlxG.height/2 - 32, 'StackSprite')) - 1]);
+		add(a[a.push(new Text(FlxG.width/2 + 32, FlxG.height/2 + 32, 'PlaneSprite')) - 1]);
 
-		var plane_cube = new PlaneCube(FlxG.width/2 - 32, FlxG.height/2 + 32, depth_group);
+		var i = 0;
+		new FlxTimer().start(3, _ -> {
+			i++;
+			for (t in a) t.visible = false;
+			FlxSpriteUtil.flicker(a[i % a.length], 0.25);
+		}, 0);
 	}
 
 	override function update(dt:Float) {
@@ -43,7 +54,7 @@ class PlayState extends FlxState {
 		depth_group.depth_sort();
 
 		depth_camera.set_delta(0.025);
-		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (last_mouse_y - FlxG.mouse.screenY) / 32 : 0, FlxG.mouse.wheel * 0.025);
+		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (FlxG.mouse.screenY - last_mouse_y) / 32 : 0);
 
 		last_mouse_x = FlxG.mouse.screenX;
 		last_mouse_y = FlxG.mouse.screenY;
