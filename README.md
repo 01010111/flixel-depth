@@ -119,6 +119,13 @@ While not a DepthSprite (thank you OOP), Billboard Text is a handy text class th
 
 ---
 
+## Things to note
+
+- Sorting is mostly handled by x/y position, and z position is taken into account so you can have objects on top of one another, but it's definitely not perfect - remember, _all the 3D is fake_!
+- If something looks a little bit off, try setting the offset of depth sprite to the center of the sprite. Same goes for the origin of billboard sprites and text!
+
+---
+
 ## Use flixel-depth
 
 To use flixel-depth in your own projects, you can install it via haxelib:
