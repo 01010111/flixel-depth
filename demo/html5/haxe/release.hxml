@@ -16,7 +16,7 @@
 -D flixel-addons=2.11.0
 -cp C:/dev/zerolib
 -D zerolib=0.8.1
--cp source
+-cp sample
 -cp zero
 -D FLX_NO_GAMEPAD
 -D ANDROID_SETUP=true
@@ -43,10 +43,6 @@
 --macro flixel.system.macros.FlxDefines.run()
 --connect
 6001
--js release/html5/bin/flixel-depth-demo.js
--cp release/html5/haxe
+-js demo/html5/bin/flixel-depth-demo.js
+-cp demo/html5/haxe
 -D html5
--dce full
--D final
--D js-flatten
--dce full
