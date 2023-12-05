@@ -4,6 +4,8 @@
 
 Flixel Depth is a fun 3D _hack_ for making orthogonally 3D looking games using haxeflixel. It does so primarily by offsetting sprites according to the camera's current angle and scaling the primary game window down. This is _NOT_ real 3D, you will still be making a _2D_ game, so expect a lot of edge cases!
 
+[github](https://github.com/01010111/flixel-depth)
+
 ---
 
 ## DepthCamera

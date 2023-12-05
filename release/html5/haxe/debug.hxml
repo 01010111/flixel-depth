@@ -41,6 +41,8 @@
 -D web
 --remap flash:openfl
 --macro flixel.system.macros.FlxDefines.run()
+--connect
+6001
 -js release/html5/bin/flixel-depth-demo.js
 -cp release/html5/haxe
 -D html5

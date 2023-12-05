@@ -35,7 +35,7 @@ class ApplicationMain
 		ManifestResources.init(config);
 		#end
 
-		app.meta["build"] = "5";
+		app.meta["build"] = "8";
 		app.meta["company"] = "01010111";
 		app.meta["file"] = "flixel-depth-demo";
 		app.meta["name"] = "flixel-depth-demo";
