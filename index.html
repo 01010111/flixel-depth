@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="./flixel-depth-demo.js"></script>
 
 	<script>
-		window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
+		// window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
 		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
 			var meta = document.getElementById ("viewport");
 			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
@@ -43,10 +43,15 @@
 			margin: auto;
 		}
 
-		#openfl-content {
+		.game {
 			background: #000000;
 			width: 800px;
-			height: 800px;
+			height: 400px;
+			max-width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
 		}
 
 		.content {
@@ -103,7 +108,7 @@
 	<noscript>This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this page.</noscript>
 
 	<div class="container">
-		<div id="openfl-content"></div>
+		<div id="openfl-content" class="game"></div>
 		<div id="readme" class="content"></div>
 	</div>
 
