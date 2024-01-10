@@ -106,7 +106,7 @@ class DepthCamera extends FlxObject {
 		zoom_delta > 0 ? zoom *= zoom_delta.map(0, 1, 1, 1.1) : zoom /= zoom_delta.map(-1, 0, 1.1, 1);
 	}
 
-	public function set_limits(orbit_y_min:Float = 1.0, zoom_min:Float = 0.5, zoom_max:Float = 10) {
+	public function set_limits(orbit_y_min:Float = 0.5, zoom_min:Float = 1, zoom_max:Float = 10) {
 		limits.orbit_y_min = orbit_y_min;
 		limits.zoom_min = zoom_min;
 		limits.zoom_max = zoom_max;
