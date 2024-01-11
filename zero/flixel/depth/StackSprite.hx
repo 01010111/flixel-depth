@@ -39,7 +39,7 @@ class StackSprite extends DepthSprite {
 		for (i in 0...slices.length * lod.max(1).floor()) {
 			var idx = (i/lod.max(1)).floor();
 			animation.frameIndex = slices[idx];
-			if (angle_offsets[idx] != null) angle += angle_offsets[idx]/lod.max(1);
+			if (angle_offsets[idx] != 0) angle += angle_offsets[idx]/lod.max(1);
 			setPosition(_position.x + offset.x * i, _position.y + offset.y * i);
 			super.draw();
 		}
