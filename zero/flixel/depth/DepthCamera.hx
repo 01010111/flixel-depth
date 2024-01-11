@@ -1,6 +1,7 @@
 package zero.flixel.depth;
 
 import openfl.display.Sprite;
+import flixel.math.FlxPoint;
 import flixel.FlxObject;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -110,6 +111,15 @@ class DepthCamera extends FlxObject {
 		limits.orbit_y_min = orbit_y_min;
 		limits.zoom_min = zoom_min;
 		limits.zoom_max = zoom_max;
+	}
+
+	// Move relative to screen
+	public function screen_move(dx:Float, dy:Float) {
+		var delta = FlxPoint.get(dx, dy);
+		delta.degrees -= camera.angle;
+		x += delta.x;
+		y += delta.y;
+		delta.put();
 	}
 
 }
