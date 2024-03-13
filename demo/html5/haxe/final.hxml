@@ -1,7 +1,7 @@
 -main ApplicationMain 
 --macro openfl.utils._internal.ExtraParamsMacro.include()
--cp C:/HaxeToolkit/haxe/lib/openfl/9,2,0/src
--D openfl=9.2.0
+-cp C:/HaxeToolkit/haxe/lib/openfl/9,1,0/src
+-D openfl=9.1.0
 --macro lime._internal.macros.DefineMacro.run()
 -cp C:/HaxeToolkit/haxe/lib/lime/8,0,0/src
 -D lime=8.0.0
@@ -42,7 +42,7 @@
 --remap flash:openfl
 --macro flixel.system.macros.FlxDefines.run()
 --connect
-6001
+6002
 -js demo/html5/bin/flixel-depth-demo.js
 -cp demo/html5/haxe
 -D html5

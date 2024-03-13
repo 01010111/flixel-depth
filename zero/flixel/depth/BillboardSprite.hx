@@ -27,4 +27,9 @@ class BillboardSprite extends DepthSprite {
 		x = _x;
 		y = _y;
 	}
+
+	public function set_offset(x:Float, y:Float) {
+		offset.set(x, y);
+		origin.set(x, y);
+	}
 }
