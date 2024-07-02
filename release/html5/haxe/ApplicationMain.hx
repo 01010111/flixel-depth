@@ -16,11 +16,11 @@ class ApplicationMain
 	#if !macro
 	public static function main()
 	{
-		lime.system.System.__registerEntryPoint("flixel-depth-demo", create);
+		lime.system.System.__registerEntryPoint("moslide", create);
 
 		#if (js && html5)
 		#if (munit || utest)
-		lime.system.System.embed("flixel-depth-demo", null, 800, 800);
+		lime.system.System.embed("moslide", null, 800, 800);
 		#end
 		#else
 		create(null);
@@ -35,10 +35,10 @@ class ApplicationMain
 		ManifestResources.init(config);
 		#end
 
-		app.meta["build"] = "22";
+		app.meta["build"] = "4";
 		app.meta["company"] = "01010111";
-		app.meta["file"] = "flixel-depth-demo";
-		app.meta["name"] = "flixel-depth-demo";
+		app.meta["file"] = "moslide";
+		app.meta["name"] = "moslide";
 		app.meta["packageName"] = "com.example.myapp";
 		app.meta["version"] = "0.0.1";
 
@@ -60,7 +60,7 @@ class ApplicationMain
 			minimized: false,
 			parameters: {},
 			resizable: false,
-			title: "flixel-depth-demo",
+			title: "moslide",
 			width: 800,
 			x: null,
 			y: null,
@@ -101,9 +101,7 @@ class ApplicationMain
 
 		app.createWindow(attributes);
 		
-		#elseif air
-		app.window.title = "flixel-depth-demo";
-		#else
+		#elseif !air
 		app.window.context.attributes.background = 3290172;
 		app.window.frameRate = 60;
 		#end
