@@ -20,6 +20,7 @@ class PlaneSprite extends DepthSprite {
 
 	override function drawComplex(camera:FlxCamera) {
 		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, checkFlipX(), checkFlipY());
+		getScreenPosition(_point, camera).subtractPoint(offset);
 
 		// instead of transforming the matrix like normal, we're going to skew the sprite to make it appear as a 3D plane
 		var cam_scale_y = cam_orbit_y.map(0, 1, Math.PI, 0);
