@@ -1,10 +1,7 @@
 package objects;
 
 import flixel.FlxSprite;
-import flixel.graphics.frames.FlxTileFrames;
 import flixel.util.FlxSpriteUtil;
-import flixel.math.FlxPoint;
-import openfl.display.BitmapData;
 import zero.flixel.depth.StackSprite;
 
 class StackSphere extends StackSprite {
@@ -24,7 +21,6 @@ class StackSphere extends StackSprite {
 			var r = Math.sin(s/16 * Math.PI) * 8;
 			var x = s % 4 * 16;
 			var y = Math.floor(s / 4) * 16;
-			trace(r);
 			FlxSpriteUtil.drawCircle(as, x + 8, y + 8, Math.max(r, 1), shades[Math.floor(Math.min(s, shades.length - 1))]);
 		}
 		loadGraphic(as.graphic, true, 16, 16);
