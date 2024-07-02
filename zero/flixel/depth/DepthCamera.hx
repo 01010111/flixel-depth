@@ -17,7 +17,7 @@ using zero.extensions.FloatExt;
 class DepthCamera extends FlxObject {
 
 	@:noCompletion
-	public static var container:Sprite;
+	public static var _container:Sprite;
 	static var initialized:Bool = false;
 
 	// creates an openfl Sprite container for scaling the game
@@ -28,14 +28,14 @@ class DepthCamera extends FlxObject {
 		var root = game.parent;
 
 		root.removeChild(game);
-		root.addChild(container = new Sprite());
-		var subcontainer = new Sprite();
-		container.addChild(subcontainer);
-		container.x = FlxG.width;
-		container.y = FlxG.height;
-		subcontainer.x = -FlxG.width;
-		subcontainer.y = -FlxG.height;
-		subcontainer.addChild(game);
+		root.addChild(_container = new Sprite());
+		var sub_container = new Sprite();
+		_container.addChild(sub_container);
+		_container.x = FlxG.width;
+		_container.y = FlxG.height;
+		sub_container.x = -FlxG.width;
+		sub_container.y = -FlxG.height;
+		sub_container.addChild(game);
 
 		initialized = true;
 	}
@@ -84,8 +84,8 @@ class DepthCamera extends FlxObject {
 		camera.angle += (orbit_x - camera.angle) * dt * snappiness;
 		camera.zoom += (zoom - camera.zoom) * dt * snappiness;
 
-		container.scaleY += (orbit_y.map(0, 1, limits.orbit_y_min, 1) - container.scaleY) * dt * snappiness;
-		container.y += (orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height) - container.y) * dt * snappiness;
+		_container.scaleY += (orbit_y.map(0, 1, limits.orbit_y_min, 1) - _container.scaleY) * dt * snappiness;
+		_container.y += (orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height) - _container.y) * dt * snappiness;
 	}
 
 	// Set camera state
@@ -96,8 +96,8 @@ class DepthCamera extends FlxObject {
 
 		camera.angle = orbit_x;
 		camera.zoom = zoom;
-		container.scaleY = orbit_y.map(0, 1, 0.5, 1);
-		container.y = orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height);
+		_container.scaleY = orbit_y.map(0, 1, 0.5, 1);
+		_container.y = orbit_y.map(0, 1, FlxG.height * 0.75, FlxG.height);
 	}
 
 	// Useful for translating user input to change in camera state

@@ -28,11 +28,11 @@ class DepthSprite extends FlxSprite {
 
 	var cam_orbit_y(get, never):Float;
 	function get_cam_orbit_y() {
-		if (DepthCamera.container == null) {
+		if (DepthCamera._container == null) {
 			FlxG.log.warn('No Depth Camera in use!');
 			return 1;
 		}
-		return DepthCamera.container.scaleY;
+		return DepthCamera._container.scaleY;
 	}
 
 	override function draw() {
