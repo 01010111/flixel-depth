@@ -127,7 +127,11 @@ class DepthCamera extends FlxObject {
 		var offset = FlxPoint.get(point.x - FlxG.width/2, point.y - FlxG.height/2);
 		offset.degrees -= camera.angle;
 
-		return point.set(cam_midp.x + offset.x, cam_midp.y + offset.y);
+		point.set(cam_midp.x + offset.x, cam_midp.y + offset.y);
+		cam_midp.put();
+		offset.put();
+
+		return point;
 	}
 
 }
