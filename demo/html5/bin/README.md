@@ -46,6 +46,12 @@ last_mouse_x = FlxG.mouse.screenX;
 last_mouse_y = FlxG.mouse.screenY;
 ```
 
+You can use **DepthCamera.screen_to_world()** to translate a point from screen space to world space:
+
+```
+var world_point = cam.screen_to_world(FlxG.mouse.getPosition());
+```
+
 ---
 
 ## DepthSprite

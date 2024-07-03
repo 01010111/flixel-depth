@@ -37,7 +37,7 @@ class MouseFollower extends FlxSprite {
 	}
 
 	function move() {
-		var p = cam.screen_to_world(FlxPoint.get(FlxG.mouse.x, FlxG.mouse.y));
+		var p = cam.screen_to_world(FlxG.mouse.getPosition());
 		setPosition(p.x.snap_to_grid(32), p.y.snap_to_grid(32));
 		p.put();
 	}

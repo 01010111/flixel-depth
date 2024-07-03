@@ -900,7 +900,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "26";
+	app.meta.h["build"] = "27";
 	app.meta.h["company"] = "01010111";
 	app.meta.h["file"] = "flixel-depth-demo";
 	app.meta.h["name"] = "flixel-depth-demo";
@@ -66821,30 +66821,11 @@ objects_MouseFollower.prototype = $extend(flixel_FlxSprite.prototype,{
 		flixel_FlxSprite.prototype.update.call(this,elapsed);
 	}
 	,move: function() {
-		var p = this.cam;
-		var x = flixel_FlxG.mouse.x;
-		var y = flixel_FlxG.mouse.y;
-		if(y == null) {
-			y = 0;
-		}
-		if(x == null) {
-			x = 0;
-		}
-		var x1 = x;
-		var y1 = y;
-		if(y1 == null) {
-			y1 = 0;
-		}
-		if(x1 == null) {
-			x1 = 0;
-		}
-		var point = flixel_math_FlxBasePoint.pool.get().set(x1,y1);
-		point._inPool = false;
-		var p1 = p.screen_to_world(point);
-		var n = p1.x;
-		var n1 = p1.y;
+		var p = this.cam.screen_to_world(flixel_FlxG.mouse.getPosition());
+		var n = p.x;
+		var n1 = p.y;
 		this.setPosition(32 * Math.round(n / 32),32 * Math.round(n1 / 32));
-		p1.put();
+		p.put();
 	}
 	,click: function() {
 		if(flixel_FlxG.mouse._leftButton.current != 2) {
