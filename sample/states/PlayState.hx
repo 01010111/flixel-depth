@@ -22,8 +22,9 @@ class PlayState extends FlxState {
 		depth_group = new DepthGroup();
 		trace(depth_group);
 
-		add(depth_camera = new DepthCamera(0, 0, 3));
+		add(depth_camera = new DepthCamera(45, 0, 3));
 		add(new DotGrid());
+		add(new MouseFollower(depth_camera));
 		add(depth_group);
 
 		depth_group.add(new Billboard(FlxG.width/2 - 32, FlxG.height/2 - 32));

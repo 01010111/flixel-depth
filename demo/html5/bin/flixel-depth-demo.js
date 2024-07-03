@@ -900,7 +900,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "22";
+	app.meta.h["build"] = "26";
 	app.meta.h["company"] = "01010111";
 	app.meta.h["file"] = "flixel-depth-demo";
 	app.meta.h["name"] = "flixel-depth-demo";
@@ -66784,6 +66784,88 @@ objects_DotGrid.__super__ = flixel_group_FlxTypedGroup;
 objects_DotGrid.prototype = $extend(flixel_group_FlxTypedGroup.prototype,{
 	__class__: objects_DotGrid
 });
+var objects_MouseFollower = function(depth_camera) {
+	this.size = 32;
+	var graphic = new openfl_display_BitmapData(this.size,this.size,true,16777215);
+	var _g = 0;
+	var _g1 = this.size;
+	while(_g < _g1) {
+		var i = _g++;
+		graphic.setPixel32(i,0,-1);
+		graphic.setPixel32(0,i,-1);
+		graphic.setPixel32(i,this.size - 1,-1);
+		graphic.setPixel32(this.size - 1,i,-1);
+	}
+	flixel_FlxSprite.call(this,0,0,graphic);
+	var this1 = this.offset;
+	var x = this.size / 2;
+	var y = this.size / 2;
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	this1.set_x(x);
+	this1.set_y(y);
+	this.cam = depth_camera;
+	this.set_visible(false);
+};
+$hxClasses["objects.MouseFollower"] = objects_MouseFollower;
+objects_MouseFollower.__name__ = "objects.MouseFollower";
+objects_MouseFollower.__super__ = flixel_FlxSprite;
+objects_MouseFollower.prototype = $extend(flixel_FlxSprite.prototype,{
+	update: function(elapsed) {
+		this.move();
+		this.click();
+		flixel_FlxSprite.prototype.update.call(this,elapsed);
+	}
+	,move: function() {
+		var p = this.cam;
+		var x = flixel_FlxG.mouse.x;
+		var y = flixel_FlxG.mouse.y;
+		if(y == null) {
+			y = 0;
+		}
+		if(x == null) {
+			x = 0;
+		}
+		var x1 = x;
+		var y1 = y;
+		if(y1 == null) {
+			y1 = 0;
+		}
+		if(x1 == null) {
+			x1 = 0;
+		}
+		var point = flixel_math_FlxBasePoint.pool.get().set(x1,y1);
+		point._inPool = false;
+		var p1 = p.screen_to_world(point);
+		var n = p1.x;
+		var n1 = p1.y;
+		this.setPosition(32 * Math.round(n / 32),32 * Math.round(n1 / 32));
+		p1.put();
+	}
+	,click: function() {
+		if(flixel_FlxG.mouse._leftButton.current != 2) {
+			return;
+		}
+		var Duration = 0.16;
+		var Interval = 0.04;
+		var EndVisibility = false;
+		if(EndVisibility == null) {
+			EndVisibility = true;
+		}
+		if(Interval == null) {
+			Interval = 0.04;
+		}
+		if(Duration == null) {
+			Duration = 1;
+		}
+		flixel_effects_FlxFlicker.flicker(this,Duration,Interval,EndVisibility,true,null,null);
+	}
+	,__class__: objects_MouseFollower
+});
 var zero_flixel_depth_PlaneSprite = function(X,Y,SimpleGraphic) {
 	zero_flixel_depth_DepthSprite.call(this,X,Y,SimpleGraphic);
 };
@@ -112356,8 +112438,9 @@ states_PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.set_bgColor(-13487044);
 		this.depth_group = new zero_flixel_depth_DepthGroup();
 		haxe_Log.trace(this.depth_group,{ fileName : "sample/states/PlayState.hx", lineNumber : 23, className : "states.PlayState", methodName : "create"});
-		this.add(this.depth_camera = new zero_flixel_depth_DepthCamera(0,0,3));
+		this.add(this.depth_camera = new zero_flixel_depth_DepthCamera(45,0,3));
 		this.add(new objects_DotGrid());
+		this.add(new objects_MouseFollower(this.depth_camera));
 		this.add(this.depth_group);
 		this.depth_group.add(new objects_Billboard(flixel_FlxG.width / 2 - 32,flixel_FlxG.height / 2 - 32));
 		this.depth_group.add(new objects_Plane(flixel_FlxG.width / 2 + 32,flixel_FlxG.height / 2 + 32));
@@ -112733,6 +112816,68 @@ zero_flixel_depth_DepthCamera.prototype = $extend(flixel_FlxObject.prototype,{
 		this.set_x(this.x + delta.x);
 		this.set_y(this.y + delta.y);
 		delta.put();
+	}
+	,screen_to_world: function(point) {
+		var _this = this.get_camera();
+		var x = _this.scroll.x + _this.viewMarginX;
+		var _this = this.get_camera();
+		var x1 = x + (_this.width - _this.viewMarginX * 2) / 2;
+		var _this = this.get_camera();
+		var y = _this.scroll.y + _this.viewMarginY;
+		var _this = this.get_camera();
+		var y1 = y + (_this.height - _this.viewMarginY * 2) / 2;
+		if(y1 == null) {
+			y1 = 0;
+		}
+		if(x1 == null) {
+			x1 = 0;
+		}
+		var x = x1;
+		var y = y1;
+		if(y == null) {
+			y = 0;
+		}
+		if(x == null) {
+			x = 0;
+		}
+		var point1 = flixel_math_FlxBasePoint.pool.get().set(x,y);
+		point1._inPool = false;
+		var cam_midp = point1;
+		var x = point.x - flixel_FlxG.width / 2;
+		var y = point.y - flixel_FlxG.height / 2;
+		if(y == null) {
+			y = 0;
+		}
+		if(x == null) {
+			x = 0;
+		}
+		var x1 = x;
+		var y1 = y;
+		if(y1 == null) {
+			y1 = 0;
+		}
+		if(x1 == null) {
+			x1 = 0;
+		}
+		var point1 = flixel_math_FlxBasePoint.pool.get().set(x1,y1);
+		point1._inPool = false;
+		var offset = point1;
+		var degs = flixel_math_FlxPoint.get_radians(offset) * (180 / Math.PI) - this.get_camera().angle;
+		var rads = degs * (Math.PI / 180);
+		var len = Math.sqrt(offset.x * offset.x + offset.y * offset.y);
+		offset.set_x(len * Math.cos(rads));
+		offset.set_y(len * Math.sin(rads));
+		var x = cam_midp.x + offset.x;
+		var y = cam_midp.y + offset.y;
+		if(y == null) {
+			y = 0;
+		}
+		if(x == null) {
+			x = 0;
+		}
+		point.set_x(x);
+		point.set_y(y);
+		return point;
 	}
 	,__class__: zero_flixel_depth_DepthCamera
 	,__properties__: $extend(flixel_FlxObject.prototype.__properties__,{set_snappiness:"set_snappiness",set_zoom:"set_zoom",set_orbit_y:"set_orbit_y",set_orbit_x:"set_orbit_x"})
