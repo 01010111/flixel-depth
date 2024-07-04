@@ -48,7 +48,7 @@ last_mouse_y = FlxG.mouse.screenY;
 
 You can use **DepthCamera.screen_to_world()** to translate a point from screen space to world space:
 
-_note: the function `FlxPointer.getGlobalScreenPosition()` used in the below example is currently in a PR for flixel. You will probably have to get the mouse's screen position using it's private variables `_globalScreenX` and `_globalScreenY`._
+_note: the function FlxPointer.getGlobalScreenPosition() used in the below example is currently in a PR for flixel. You will probably have to get the mouse's screen position using it's private variables _globalScreenX and _globalScreenY._
 
 ```
 var mouse_world_position = cam.screen_to_world(FlxG.mouse.getGlobalScreenPosition());

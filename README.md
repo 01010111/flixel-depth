@@ -141,3 +141,18 @@ To use flixel-depth in your own projects, you can install it via haxelib:
 ```
 haxelib git flixel-depth https://github.com/01010111/flixel-depth.git
 ```
+
+You'll also need the **zerolib** dependency:
+
+```
+haxelib install zerolib
+```
+
+Tested with:
+
+```
+haxe version 4.3.2
+flixel version 5.8.0
+openfl version 9.3.3
+lime version 8.1.2
+```

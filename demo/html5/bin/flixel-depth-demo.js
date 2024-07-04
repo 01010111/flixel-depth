@@ -900,7 +900,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "29";
+	app.meta.h["build"] = "31";
 	app.meta.h["company"] = "01010111";
 	app.meta.h["file"] = "flixel-depth-demo";
 	app.meta.h["name"] = "flixel-depth-demo";
@@ -112485,7 +112485,7 @@ states_PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.depth_camera.set_delta(0.025);
 		var _this = flixel_FlxG.mouse._leftButton;
 		var _this1 = flixel_FlxG.mouse._leftButton;
-		this.depth_camera.set_delta(_this.current == 1 || _this.current == 2 ? (this.last_mouse_x - flixel_FlxG.mouse.screenX) / 8 : 0,_this1.current == 1 || _this1.current == 2 ? (flixel_FlxG.mouse.screenY - this.last_mouse_y) / 32 : 0);
+		this.depth_camera.set_delta(_this.current == 1 || _this.current == 2 ? (this.last_mouse_x - flixel_FlxG.mouse.screenX) / 8 : 0,_this1.current == 1 || _this1.current == 2 ? (flixel_FlxG.mouse.screenY - this.last_mouse_y) / 16 : 0);
 		this.last_mouse_x = flixel_FlxG.mouse.screenX;
 		this.last_mouse_y = flixel_FlxG.mouse.screenY;
 	}
