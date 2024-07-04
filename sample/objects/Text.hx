@@ -1,8 +1,5 @@
 package objects;
 
-import flixel.util.FlxTimer;
-import flixel.FlxG;
-import flixel.math.FlxPoint;
 import zero.flixel.depth.BillboardText;
 
 class Text extends BillboardText {

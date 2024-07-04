@@ -900,7 +900,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "27";
+	app.meta.h["build"] = "29";
 	app.meta.h["company"] = "01010111";
 	app.meta.h["file"] = "flixel-depth-demo";
 	app.meta.h["name"] = "flixel-depth-demo";
@@ -26962,6 +26962,32 @@ flixel_input_FlxPointer.prototype = {
 		point.set_y((this._globalScreenY - Camera.y) / Camera.zoom + Camera.viewMarginY);
 		return point;
 	}
+	,getGlobalScreenPosition: function(point) {
+		if(point == null) {
+			var x = 0;
+			var y = 0;
+			if(y == null) {
+				y = 0;
+			}
+			if(x == null) {
+				x = 0;
+			}
+			var point1 = flixel_math_FlxBasePoint.pool.get().set(x,y);
+			point1._inPool = false;
+			point = point1;
+		}
+		var x = this._globalScreenX;
+		var y = this._globalScreenY;
+		if(y == null) {
+			y = 0;
+		}
+		if(x == null) {
+			x = 0;
+		}
+		point.set_x(x);
+		point.set_y(y);
+		return point;
+	}
 	,getPosition: function(point) {
 		if(point == null) {
 			var x = 0;
@@ -38894,19 +38920,6 @@ flixel_tweens_FlxTweenManager.prototype = $extend(flixel_FlxBasic.prototype,{
 		}
 		return Tween;
 	}
-	,add_flixel_tweens_misc_NumTween: function(Tween,Start) {
-		if(Start == null) {
-			Start = false;
-		}
-		if(Tween == null) {
-			return null;
-		}
-		this._tweens.push(Tween);
-		if(Start) {
-			Tween.start();
-		}
-		return Tween;
-	}
 	,add_flixel_tweens_FlxTween: function(Tween,Start) {
 		if(Start == null) {
 			Start = false;
@@ -38921,6 +38934,19 @@ flixel_tweens_FlxTweenManager.prototype = $extend(flixel_FlxBasic.prototype,{
 		return Tween;
 	}
 	,add_flixel_tweens_misc_VarTween: function(Tween,Start) {
+		if(Start == null) {
+			Start = false;
+		}
+		if(Tween == null) {
+			return null;
+		}
+		this._tweens.push(Tween);
+		if(Start) {
+			Tween.start();
+		}
+		return Tween;
+	}
+	,add_flixel_tweens_misc_NumTween: function(Tween,Start) {
 		if(Start == null) {
 			Start = false;
 		}
@@ -40307,6 +40333,15 @@ flixel_tweens_motion_QuadPath.prototype = $extend(flixel_tweens_motion_Motion.pr
 var flixel_util_FlxArrayUtil = function() { };
 $hxClasses["flixel.util.FlxArrayUtil"] = flixel_util_FlxArrayUtil;
 flixel_util_FlxArrayUtil.__name__ = "flixel.util.FlxArrayUtil";
+flixel_util_FlxArrayUtil.fastSplice_flixel_tweens_FlxTween = function(array,element) {
+	var index = array.indexOf(element);
+	if(index != -1) {
+		array[index] = array[array.length - 1];
+		array.pop();
+		return array;
+	}
+	return array;
+};
 flixel_util_FlxArrayUtil.setLength_Int = function(array,newLength) {
 	if(newLength < 0) {
 		return array;
@@ -40339,15 +40374,6 @@ flixel_util_FlxArrayUtil.flatten2DArray_Int = function(array) {
 		}
 	}
 	return result;
-};
-flixel_util_FlxArrayUtil.fastSplice_flixel_tweens_FlxTween = function(array,element) {
-	var index = array.indexOf(element);
-	if(index != -1) {
-		array[index] = array[array.length - 1];
-		array.pop();
-		return array;
-	}
-	return array;
 };
 flixel_util_FlxArrayUtil.fastSplice_flixel_util_FlxTimer = function(array,element) {
 	var index = array.indexOf(element);
@@ -64291,7 +64317,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 167219;
+	this.version = 604821;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -66726,7 +66752,6 @@ var objects_Billboard = function(x,y) {
 		x = 0;
 	}
 	zero_flixel_depth_BillboardSprite.call(this,x,y,this.make_graphic());
-	haxe_Log.trace(this,{ fileName : "sample/objects/Billboard.hx", lineNumber : 11, className : "objects.Billboard", methodName : "new"});
 	var this1 = this.offset;
 	var x = 8;
 	var y = 16;
@@ -66821,7 +66846,8 @@ objects_MouseFollower.prototype = $extend(flixel_FlxSprite.prototype,{
 		flixel_FlxSprite.prototype.update.call(this,elapsed);
 	}
 	,move: function() {
-		var p = this.cam.screen_to_world(flixel_FlxG.mouse.getPosition());
+		var p = this.cam.screen_to_world(flixel_FlxG.mouse.getGlobalScreenPosition());
+		this.setPosition(p.x,p.y);
 		var n = p.x;
 		var n1 = p.y;
 		this.setPosition(32 * Math.round(n / 32),32 * Math.round(n1 / 32));
@@ -112418,8 +112444,7 @@ states_PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxG.mouse.set_useSystemCursor(true);
 		this.set_bgColor(-13487044);
 		this.depth_group = new zero_flixel_depth_DepthGroup();
-		haxe_Log.trace(this.depth_group,{ fileName : "sample/states/PlayState.hx", lineNumber : 23, className : "states.PlayState", methodName : "create"});
-		this.add(this.depth_camera = new zero_flixel_depth_DepthCamera(45,0,3));
+		this.add(this.depth_camera = new zero_flixel_depth_DepthCamera(0,0,3));
 		this.add(new objects_DotGrid());
 		this.add(new objects_MouseFollower(this.depth_camera));
 		this.add(this.depth_group);
@@ -112799,31 +112824,7 @@ zero_flixel_depth_DepthCamera.prototype = $extend(flixel_FlxObject.prototype,{
 		delta.put();
 	}
 	,screen_to_world: function(point) {
-		var _this = this.get_camera();
-		var x = _this.scroll.x + _this.viewMarginX;
-		var _this = this.get_camera();
-		var x1 = x + (_this.width - _this.viewMarginX * 2) / 2;
-		var _this = this.get_camera();
-		var y = _this.scroll.y + _this.viewMarginY;
-		var _this = this.get_camera();
-		var y1 = y + (_this.height - _this.viewMarginY * 2) / 2;
-		if(y1 == null) {
-			y1 = 0;
-		}
-		if(x1 == null) {
-			x1 = 0;
-		}
-		var x = x1;
-		var y = y1;
-		if(y == null) {
-			y = 0;
-		}
-		if(x == null) {
-			x = 0;
-		}
-		var point1 = flixel_math_FlxBasePoint.pool.get().set(x,y);
-		point1._inPool = false;
-		var cam_midp = point1;
+		var cam_midp = this.getPosition();
 		var x = point.x - flixel_FlxG.width / 2;
 		var y = point.y - flixel_FlxG.height / 2;
 		if(y == null) {
@@ -112848,6 +112849,12 @@ zero_flixel_depth_DepthCamera.prototype = $extend(flixel_FlxObject.prototype,{
 		var len = Math.sqrt(offset.x * offset.x + offset.y * offset.y);
 		offset.set_x(len * Math.cos(rads));
 		offset.set_y(len * Math.sin(rads));
+		var l = Math.sqrt(offset.x * offset.x + offset.y * offset.y) / this.get_camera().zoom;
+		if(!(Math.abs(offset.x) < 0.0000001 && Math.abs(offset.y) < 0.0000001)) {
+			var a = flixel_math_FlxPoint.get_radians(offset);
+			offset.set_x(l * Math.cos(a));
+			offset.set_y(l * Math.sin(a));
+		}
 		var x = cam_midp.x + offset.x;
 		var y = cam_midp.y + offset.y;
 		if(y == null) {
@@ -112858,6 +112865,8 @@ zero_flixel_depth_DepthCamera.prototype = $extend(flixel_FlxObject.prototype,{
 		}
 		point.set_x(x);
 		point.set_y(y);
+		cam_midp.put();
+		offset.put();
 		return point;
 	}
 	,__class__: zero_flixel_depth_DepthCamera

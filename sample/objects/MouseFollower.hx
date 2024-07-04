@@ -1,12 +1,9 @@
 package objects;
 
-import openfl.geom.Matrix;
-import states.PlayState;
-import zero.flixel.depth.DepthCamera;
-import flixel.math.FlxPoint;
 import flixel.FlxG;
-import openfl.display.BitmapData;
 import flixel.FlxSprite;
+import openfl.display.BitmapData;
+import zero.flixel.depth.DepthCamera;
 
 using zero.extensions.FloatExt;
 using flixel.util.FlxSpriteUtil;
@@ -37,7 +34,8 @@ class MouseFollower extends FlxSprite {
 	}
 
 	function move() {
-		var p = cam.screen_to_world(FlxG.mouse.getPosition());
+		var p = cam.screen_to_world(FlxG.mouse.getGlobalScreenPosition());
+		setPosition(p.x, p.y);
 		setPosition(p.x.snap_to_grid(32), p.y.snap_to_grid(32));
 		p.put();
 	}

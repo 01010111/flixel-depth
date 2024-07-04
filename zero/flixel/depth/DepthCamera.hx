@@ -123,11 +123,13 @@ class DepthCamera extends FlxObject {
 	}
 
 	public function screen_to_world(point:FlxPoint) {
-		var cam_midp = FlxPoint.get(camera.viewX + camera.viewWidth/2, camera.viewY + camera.viewHeight/2);
+		var cam_midp = getPosition();
 		var offset = FlxPoint.get(point.x - FlxG.width/2, point.y - FlxG.height/2);
 		offset.degrees -= camera.angle;
+		offset.length /= camera.zoom;
 
 		point.set(cam_midp.x + offset.x, cam_midp.y + offset.y);
+
 		cam_midp.put();
 		offset.put();
 

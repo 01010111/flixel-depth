@@ -8,7 +8,6 @@ class Billboard extends BillboardSprite {
 
 	public function new(x:Float = 0, y:Float = 0) {
 		super(x, y, make_graphic());
-		trace(this);
 		offset.set(8, 16);
 		origin.set(8, 16);
 	}

@@ -1,11 +1,10 @@
 package states;
 
-import flixel.util.FlxSpriteUtil;
-import flixel.util.FlxTimer;
-import zero.flixel.depth.BillboardText;
 import objects.*;
 import flixel.FlxState;
 import flixel.FlxG;
+import flixel.util.FlxSpriteUtil;
+import flixel.util.FlxTimer;
 import zero.flixel.depth.DepthGroup;
 import zero.flixel.depth.DepthCamera;
 
@@ -20,9 +19,8 @@ class PlayState extends FlxState {
 		FlxG.mouse.useSystemCursor = true;
 		bgColor = 0xff32343C;
 		depth_group = new DepthGroup();
-		trace(depth_group);
 
-		add(depth_camera = new DepthCamera(45, 0, 3));
+		add(depth_camera = new DepthCamera(0, 0, 3));
 		add(new DotGrid());
 		add(new MouseFollower(depth_camera));
 		add(depth_group);
@@ -32,7 +30,6 @@ class PlayState extends FlxState {
 		depth_group.add(new StackSphere(FlxG.width/2 + 32, FlxG.height/2 - 32));
 		depth_group.add(new StackCube(FlxG.width/2, FlxG.height/2));
 		new PlaneCube(FlxG.width/2 - 32, FlxG.height/2 + 32, depth_group);
-
 
 		var a:Array<Text> = [];
 
