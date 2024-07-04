@@ -57,7 +57,7 @@ class PlayState extends FlxState {
 		}
 
 		depth_camera.set_delta(0.025);
-		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (FlxG.mouse.screenY - last_mouse_y) / 32 : 0);
+		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (FlxG.mouse.screenY - last_mouse_y) / 16 : 0);
 
 		last_mouse_x = FlxG.mouse.screenX;
 		last_mouse_y = FlxG.mouse.screenY;
