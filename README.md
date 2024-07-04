@@ -148,6 +148,13 @@ You'll also need the **zerolib** dependency:
 haxelib install zerolib
 ```
 
+You'll also need to add these to your game's **Project.xml**:
+
+```
+<haxelib name="flixel-depth" />
+<haxelib name="zerolib" />
+```
+
 Tested with:
 
 ```
