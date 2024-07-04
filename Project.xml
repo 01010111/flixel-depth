@@ -22,7 +22,7 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
-	<haxelib name="zerolib-flixel" />
+	<haxelib name="zerolib" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
