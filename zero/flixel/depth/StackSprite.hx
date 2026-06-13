@@ -1,7 +1,5 @@
 package zero.flixel.depth;
 
-import flixel.math.FlxPoint;
-
 using Math;
 using zero.extensions.FloatExt;
 
@@ -29,30 +27,39 @@ class StackSprite extends DepthSprite {
 	}
 
 	override function draw() {
-		// store previous transform values
 		var _angle = angle;
-		var _position = FlxPoint.get(x, y);
-		//get offset vector
-		var offset = FlxPoint.get(cam_orbit_y.map(0, 1, gap / lod.max(1), 0));
-		offset.degrees = -camera.angle - 90;
-		// loop - set frame and transform per slice
-		for (i in 0...slices.length * lod.max(1).floor()) {
-			var idx = (i/lod.max(1)).floor();
-			animation.frameIndex = slices[idx];
+		var base_x = x;
+		var base_y = y;
+		var lod_value = lod.max(1).floor();
+		var slice_count = slices.length;
+		var offset = cam_orbit_y.map(0, 1, gap / lod_value, 0);
+		var offset_angle = (-camera.angle - 90) * Math.PI / 180;
+		var step_x = Math.cos(offset_angle) * offset;
+		var step_y = Math.sin(offset_angle) * offset;
+		var cumulative_angle = _angle;
+
+		for (slice in 0...slice_count) {
+			var frameIndex = slices[slice];
+			var angleDelta:Float = 0;
+
 			#if html5
-			if (angle_offsets[idx] != null) angle += angle_offsets[idx]/lod.max(1);
+			if (angle_offsets[slice] != null) angleDelta = angle_offsets[slice] / lod_value;
 			#else
-			if (angle_offsets[idx] != 0) angle += angle_offsets[idx]/lod.max(1);
+			if (angle_offsets[slice] != 0) angleDelta = angle_offsets[slice] / lod_value;
 			#end
-			setPosition(_position.x + offset.x * i, _position.y + offset.y * i);
-			super.draw();
+			
+			animation.frameIndex = frameIndex;
+
+			for (j in 0...lod_value) {
+				cumulative_angle += angleDelta;
+				angle = cumulative_angle;
+				setPosition(base_x + step_x * (slice * lod_value + j), base_y + step_y * (slice * lod_value + j));
+				super.draw();
+			}
 		}
-		// restore previous transform values
+
 		angle = _angle;
-		setPosition(_position.x, _position.y);
-		// recycle vectors
-		_position.put();
-		offset.put();
+		setPosition(base_x, base_y);
 	}
 
 }

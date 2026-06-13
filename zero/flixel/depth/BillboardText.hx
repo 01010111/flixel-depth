@@ -29,13 +29,12 @@ class BillboardText extends FlxText {
 		angle = _angle - camera.angle;
 		scale.y = _scaleY * 1/cam_orbit_y;
 
-		var offset = FlxPoint.get(z * cam_orbit_y.map(0, 1, Math.PI, 0));
-		offset.degrees = z >= 0 ? -camera.angle - 90 : -camera.angle + 90;
+		var offset_length = z * cam_orbit_y.map(0, 1, Math.PI, 0);
+		var offset_angle = (z >= 0 ? -camera.angle - 90 : -camera.angle + 90) * Math.PI / 180;
+		var offset_x = Math.cos(offset_angle) * offset_length;
+		var offset_y = Math.sin(offset_angle) * offset_length;
 
-		setPosition(x + offset.x, y + offset.y);
-		super.draw();
-
-		offset.put();
+		setPosition(x + offset_x, y + offset_y);
 		angle = _angle;
 		scale.y = _scaleY;
 		x = _x;

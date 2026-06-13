@@ -19,7 +19,7 @@ class ApplicationMain
 		lime.system.System.__registerEntryPoint("flixel-depth-demo", create);
 
 		#if (js && html5)
-		#if (munit || utest)
+		#if (munit || (utest && openfl_enable_utest_legacy_mode))
 		lime.system.System.embed("flixel-depth-demo", null, 800, 800);
 		#end
 		#else
@@ -35,7 +35,7 @@ class ApplicationMain
 		ManifestResources.init(config);
 		#end
 
-		app.meta["build"] = "34";
+		app.meta["build"] = "36";
 		app.meta["company"] = "01010111";
 		app.meta["file"] = "flixel-depth-demo";
 		app.meta["name"] = "flixel-depth-demo";
@@ -215,7 +215,11 @@ class ApplicationMain
 							stage.addChild(current);
 						}
 
+						//this define is for internal use only
+						//note: it may be removed abruptly in the future
+						#if !no_openfl_entry_point
 						new DocumentClass(cast current);
+						#end
 					};
 				}
 				else

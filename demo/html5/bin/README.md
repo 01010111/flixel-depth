@@ -48,10 +48,8 @@ last_mouse_y = FlxG.mouse.screenY;
 
 You can use **DepthCamera.screen_to_world()** to translate a point from screen space to world space:
 
-*note: the function FlxPointer.getGlobalScreenPosition() used in the below example is currently in a PR for flixel. You will probably have to get the mouse's screen position using it's private variables _globalScreenX and _globalScreenY.*
-
 ```
-var mouse_world_position = cam.screen_to_world(FlxG.mouse.getGlobalScreenPosition());
+var mouse_world_position = cam.mouse_to_world();
 ```
 
 ---
@@ -148,11 +146,18 @@ You'll also need the **zerolib** dependency:
 haxelib install zerolib
 ```
 
+You'll also need to add these to your game's **Project.xml**:
+
+```
+<haxelib name="flixel-depth" />
+<haxelib name="zerolib" />
+```
+
 Tested with:
 
 ```
 haxe version 4.3.2
-flixel version 5.8.0
-openfl version 9.3.3
-lime version 8.1.2
+flixel version 6.1.2
+openfl version 9.5.2
+lime version 8.3.2
 ```

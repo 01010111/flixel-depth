@@ -2,6 +2,7 @@ package objects;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import openfl.display.BitmapData;
 import zero.flixel.depth.DepthCamera;
 
@@ -33,13 +34,12 @@ class MouseFollower extends FlxSprite {
 		super.update(elapsed);
 	}
 
+	var mouse_position:FlxPoint = new FlxPoint();
 	function move() {
-		var p = cam.screen_to_world(FlxG.mouse.getGlobalScreenPosition());
-		setPosition(p.x, p.y);
-		setPosition(p.x.snap_to_grid(32), p.y.snap_to_grid(32));
-		p.put();
+		cam.mouse_to_world(mouse_position);
+		setPosition(mouse_position.x.snap_to_grid(32), mouse_position.y.snap_to_grid(32));
 	}
-
+	
 	function click() {
 		if (!FlxG.mouse.justPressed) return;
 		this.flicker(0.16, 0.04, false);

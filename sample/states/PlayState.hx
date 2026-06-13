@@ -52,15 +52,15 @@ class PlayState extends FlxState {
 		depth_group.depth_sort();
 
 		if (FlxG.mouse.justPressed) {
-			last_mouse_x = FlxG.mouse.screenX;
-			last_mouse_y = FlxG.mouse.screenY;
+			last_mouse_x = FlxG.mouse.viewX;
+			last_mouse_y = FlxG.mouse.viewY;
 		}
 
 		depth_camera.set_delta(0.025);
-		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.screenX) / 8 : 0, FlxG.mouse.pressed ? (FlxG.mouse.screenY - last_mouse_y) / 16 : 0);
+		depth_camera.set_delta(FlxG.mouse.pressed ? (last_mouse_x - FlxG.mouse.viewX) / 8 : 0, FlxG.mouse.pressed ? (FlxG.mouse.viewY - last_mouse_y) / 16 : 0);
 
-		last_mouse_x = FlxG.mouse.screenX;
-		last_mouse_y = FlxG.mouse.screenY;
+		last_mouse_x = FlxG.mouse.viewX;
+		last_mouse_y = FlxG.mouse.viewY;
 	}
 
 }

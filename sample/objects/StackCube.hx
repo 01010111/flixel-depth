@@ -11,7 +11,7 @@ class StackCube extends StackSprite {
 		loadGraphic(make_graphic(), true, 16, 16);
 		auto_stack();
 		offset.set(8, 8);
-		lod = 16;
+		lod = 8;
 		FlxTween.tween(this, { gap: Math.PI * 2 }, 1, { type: PINGPONG, ease: FlxEase.sineInOut });
 	}
 

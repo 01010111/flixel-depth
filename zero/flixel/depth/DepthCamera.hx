@@ -115,23 +115,46 @@ class DepthCamera extends FlxObject {
 
 	// Move relative to screen
 	public function screen_move(dx:Float, dy:Float) {
-		var delta = FlxPoint.get(dx, dy);
-		delta.degrees -= camera.angle;
-		x += delta.x;
-		y += delta.y;
-		delta.put();
+		var radians = camera.angle * Math.PI / 180;
+		var cos = Math.cos(radians);
+		var sin = Math.sin(radians);
+		x += dx * cos - dy * sin;
+		y += dx * sin + dy * cos;
 	}
 
 	public function screen_to_world(point:FlxPoint) {
-		var cam_midp = getPosition();
-		var offset = FlxPoint.get(point.x - FlxG.width/2, point.y - FlxG.height/2);
-		offset.degrees -= camera.angle;
-		offset.length /= camera.zoom;
+		var radians = -camera.angle * Math.PI / 180;
+		var cos = Math.cos(radians);
+		var sin = Math.sin(radians);
+		var offset_x = (point.x - FlxG.width/2) * cos - (point.y - FlxG.height/2) * sin;
+		var offset_y = (point.x - FlxG.width/2) * sin + (point.y - FlxG.height/2) * cos;
 
-		point.set(cam_midp.x + offset.x, cam_midp.y + offset.y);
+		offset_x /= camera.zoom;
+		offset_y /= camera.zoom;
+
+		var cam_midp = getPosition();
+		point.set(cam_midp.x + offset_x, cam_midp.y + offset_y);
+		cam_midp.put();
+
+		return point;
+	}
+
+	public function mouse_to_world(?point:FlxPoint) {
+		if (point == null) point = FlxPoint.get();
+		
+		var radians = -camera.angle * Math.PI / 180;
+		var cos = Math.cos(radians);
+		var sin = Math.sin(radians);
+		var offset_x = (FlxG.mouse.gameX - FlxG.width/2) * cos - (FlxG.mouse.gameY - FlxG.height/2) * sin;
+		var offset_y = (FlxG.mouse.gameX - FlxG.width/2) * sin + (FlxG.mouse.gameY - FlxG.height/2) * cos;
+
+		offset_x /= camera.zoom;
+		offset_y /= camera.zoom;
+
+		var cam_midp = getPosition();
+		point.set(cam_midp.x + offset_x, cam_midp.y + offset_y);
 
 		cam_midp.put();
-		offset.put();
 
 		return point;
 	}
